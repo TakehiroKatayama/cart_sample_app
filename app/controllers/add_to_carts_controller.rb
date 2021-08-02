@@ -1,0 +1,2 @@
+class AddToCartsController < ApplicationController
+end
