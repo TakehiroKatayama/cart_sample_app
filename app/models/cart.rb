@@ -1,3 +1,8 @@
 class Cart < ApplicationRecord
-  has_many :cart_items, dependent: :destroy
+  belongs_to :product
+  belongs_to :cart_item
+
+  def sum_of_price
+    product.price * quantity
+  end
 end
