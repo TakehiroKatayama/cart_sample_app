@@ -14,13 +14,21 @@ ActiveRecord::Schema.define(version: 2021_07_31_044649) do
 
   create_table "cart_items", force: :cascade do |t|
     t.integer "quantity", default: 0
+    t.integer "product_id", null: false
+    t.integer "cart_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.index ["cart_id"], name: "index_cart_items_on_cart_id"
+    t.index ["product_id"], name: "index_cart_items_on_product_id"
   end
 
   create_table "carts", force: :cascade do |t|
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "product_id", null: false
+    t.integer "cart_item_id", null: false
+    t.index ["cart_item_id"], name: "index_carts_on_cart_item_id"
+    t.index ["product_id"], name: "index_carts_on_product_id"
   end
 
   create_table "products", force: :cascade do |t|
@@ -30,4 +38,8 @@ ActiveRecord::Schema.define(version: 2021_07_31_044649) do
     t.datetime "updated_at", precision: 6, null: false
   end
 
+  add_foreign_key "cart_items", "carts"
+  add_foreign_key "cart_items", "products"
+  add_foreign_key "carts", "cart_items"
+  add_foreign_key "carts", "products"
 end
